@@ -1,39 +1,15 @@
-import { useState, useEffect, useRef } from 'react';
+import ScrollContainer from 'react-indiana-drag-scroll';
 import styled from 'styled-components';
-import './App.css';
-
-interface Position {
-	x: number;
-	y: number;
-}
 
 function App() {
-	const bigContainerRef = useRef<HTMLDivElement>(null);
-	const [scrollPosition, setScrollPosition] = useState<Position>({ x: 0, y: 0 });
-	const [mousePos, setMousePos] = useState<Position>({ x: 0, y: 0 });
-
-	const handleMouseMove = (event: MouseEvent) => {
-		setMousePos({ x: event.clientX, y: event.clientY });
-		window.scrollTo(event.clientX, event.clientY);
-	};
-
-	const handleMouseDown = (event: MouseEvent) => {
-		setMousePos({ x: event.clientX, y: event.clientY });
-		window.scrollTo(event.clientX, event.clientY);
-	};
-	useEffect(() => {
-		window.addEventListener('mousemove', handleMouseMove);
-
-		return () => {
-			window.removeEventListener('mousemove', handleMouseMove);
-		};
-	}, []);
 	return (
-		<BigContainer ref={bigContainerRef}>
-			{[...Array(50)].map((item) => (
-				<Card />
-			))}
-		</BigContainer>
+		<ScrollContainer className="fullscreen grabbable">
+			<BigContainer>
+				{[...Array(50)].map((item) => (
+					<Card />
+				))}
+			</BigContainer>
+		</ScrollContainer>
 	);
 }
 
