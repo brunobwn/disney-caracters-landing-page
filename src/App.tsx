@@ -1,21 +1,22 @@
-import { useEffect, useState } from 'react';
 import ScrollContainer from 'react-indiana-drag-scroll';
 import styled from 'styled-components';
 
 const grid = { rows: 15, columns: 20 };
-const possibleSpotsOld = Array(grid.rows * grid.columns)
-	.fill(1)
-	.map((_, i) => i + 1);
 
-function createPossiblePositions(size: number) {
-	return Array(size)
-		.fill(1)
-		.map((_, i) => i + 1);
-}
-const possibleSpots = {
-	x: createPossiblePositions(grid.columns),
-	y: createPossiblePositions(grid.rows),
+type gridType = {
+	rows: number;
+	columns: number;
 };
+
+function createPossiblePositions(grid: gridType) {
+	const possibles = [];
+	for (let i = 1; i <= grid.rows; i++) {
+		for (let j = 1; j <= grid.columns; j++) {
+			possibles.push([i, j]);
+		}
+	}
+	return possibles;
+}
 
 const BigContainer = styled.div`
 	min-width: 1024px;
@@ -45,44 +46,30 @@ const Card = styled.div.attrs((props: CardProps) => ({
 
 const EmptyCard = styled.div``;
 
+interface IPosition {
+	x: number;
+	y: number;
+}
+const possibleSpotsInitial = createPossiblePositions(grid);
+
 function App() {
-	const [caracters, setCaracters] = useState([]);
-	function suffleArray(data: []) {
-		const newData = Array(data.length);
-		const pos = Math.floor(Math.random() * data.length);
+	const possibleSpots = possibleSpotsInitial;
+	const caracters = Array(53).fill(1);
+
+	function getRandomPosition() {
+		const posIndex = Math.floor(Math.random() * possibleSpots.length);
+		const pos = possibleSpots[posIndex];
+		possibleSpots.slice(posIndex, 1);
+		return pos;
 	}
 
-	async function getCaracters() {
-		const caracters = await fetch('https://thronesapi.com/api/v2/Characters')
-			.then((res) => res.json())
-			.then((data) => {
-				setCaracters(data);
-			});
-	}
-
-	useEffect(() => {
-		getCaracters();
-	}, []);
-
-	function getRandomXPosition() {
-		const pos = Math.floor(Math.random() * possibleSpots.x.length);
-		possibleSpots.x.slice(pos, 1);
-		console.log(possibleSpots.x[pos]);
-		return possibleSpots.x[pos];
-	}
-
-	function getRandomYPosition() {
-		const pos = Math.floor(Math.random() * possibleSpots.y.length);
-		possibleSpots.y.slice(pos, 1);
-		console.log(possibleSpots.y[pos]);
-		return possibleSpots.y[pos];
-	}
 	return (
 		<ScrollContainer className="fullscreen grabbable">
 			<BigContainer>
-				{caracters.map((char) => (
-					<Card gridRow={getRandomXPosition()} gridColumn={getRandomYPosition()} />
-				))}
+				{caracters.map((char, i) => {
+					const [x, y] = getRandomPosition();
+					return <Card key={i} gridRow={x} gridColumn={y} />;
+				})}
 			</BigContainer>
 		</ScrollContainer>
 	);
