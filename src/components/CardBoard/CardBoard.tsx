@@ -28,7 +28,7 @@ function CardBoard() {
 			<BigContainer>
 				{caracters.map((char, i) => {
 					const [x, y] = getRandomPosition();
-					return <Card key={i} gridRow={x} gridColumn={y} />;
+					return <Card key={i} gridRow={x} gridColumn={y}/>;
 				})}
 			</BigContainer>
 		</ScrollContainer>
