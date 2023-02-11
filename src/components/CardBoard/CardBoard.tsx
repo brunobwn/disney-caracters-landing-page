@@ -1,6 +1,6 @@
 import { useRef, useEffect } from 'react';
 import ScrollContainer from 'react-indiana-drag-scroll';
-import { createPossiblePositions, gridType } from './helpers';
+import { createPossiblePositions } from './helpers';
 import { BigContainer, Card, grid } from './styles';
 
 export const possibleSpotsInitial = createPossiblePositions(grid);
