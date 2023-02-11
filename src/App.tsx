@@ -1,22 +1,12 @@
 import ScrollContainer from 'react-indiana-drag-scroll';
 import styled from 'styled-components';
 
-const grid = { rows: 15, columns: 20 };
+const grid = { rows: 20, columns: 20 };
 
 type gridType = {
 	rows: number;
 	columns: number;
 };
-
-function createPossiblePositions(grid: gridType) {
-	const possibles = [];
-	for (let i = 1; i <= grid.rows; i++) {
-		for (let j = 1; j <= grid.columns; j++) {
-			possibles.push([i, j]);
-		}
-	}
-	return possibles;
-}
 
 const BigContainer = styled.div`
 	min-width: 1024px;
@@ -46,29 +36,36 @@ const Card = styled.div.attrs((props: CardProps) => ({
 
 const EmptyCard = styled.div``;
 
-interface IPosition {
-	x: number;
-	y: number;
+function createPossiblePositions(grid: gridType) {
+	const possibles = [];
+	for (let i = 1; i <= grid.rows; i++) {
+		for (let j = 1; j <= grid.columns; j++) {
+			possibles.push([i, j]);
+		}
+	}
+	console.log('Possibilidades func ', possibles);
+	return possibles;
 }
+
 const possibleSpotsInitial = createPossiblePositions(grid);
 
 function App() {
-	const possibleSpots = possibleSpotsInitial;
-	const caracters = Array(53).fill(1);
+	const caracters = Array(200).fill(1);
+	const availableSpots = possibleSpotsInitial;
 
 	function getRandomPosition() {
-		const posIndex = Math.floor(Math.random() * possibleSpots.length);
-		const pos = possibleSpots[posIndex];
-		possibleSpots.slice(posIndex, 1);
-		return pos;
+		const posIndex = Math.floor(Math.random() * availableSpots.length);
+		availableSpots.splice(posIndex, 1);
+		return availableSpots[posIndex];
 	}
 
 	return (
 		<ScrollContainer className="fullscreen grabbable">
 			<BigContainer>
 				{caracters.map((char, i) => {
-					const [x, y] = getRandomPosition();
-					return <Card key={i} gridRow={x} gridColumn={y} />;
+					const randomPos = getRandomPosition();
+					console.log(availableSpots);
+					return <Card key={i} gridRow={randomPos[0]} gridColumn={randomPos[1]} />;
 				})}
 			</BigContainer>
 		</ScrollContainer>
