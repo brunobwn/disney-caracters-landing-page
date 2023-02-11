@@ -24,7 +24,7 @@ function CardBoard() {
 	}, []);
 
 	return (
-		<ScrollContainer className="fullscreen grabbable" innerRef={scrollContainer}>
+		<ScrollContainer className="fullscreen grabbable" ref={scrollContainer} hideScrollbars={true}>
 			<BigContainer>
 				{caracters.map((char, i) => {
 					const [x, y] = getRandomPosition();
