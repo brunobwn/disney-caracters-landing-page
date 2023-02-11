@@ -8,6 +8,7 @@ export const InputContainer = styled.div`
 	left: 50%;
 	transform: translateX(-50%);
 	padding: 0 1rem;
+	z-index: 100;
 `;
 
 export const BigInput = styled.input`
