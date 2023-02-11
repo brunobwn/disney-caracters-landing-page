@@ -20,7 +20,7 @@
 	width: 100vw;
 	height: 100vh;
 	scroll-behavior: smooth;
-	overflow: hidden;
+	/* overflow: hidden; */
 	cursor: drag;
 }
 
