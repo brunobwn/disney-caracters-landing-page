@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { gridType } from './helpers';
+import westerosBackground from './../../assets/westeros-background.jpg';
 
 export const grid: gridType = { rows: 20, columns: 20 };
 
@@ -12,6 +13,9 @@ export const BigContainer = styled.div`
 	grid-template-columns: repeat(${grid.columns}, 1fr);
 	grid-template-rows: repeat(${grid.rows}, 1fr);
 	gap: 2rem;
+	background-image: url(${westerosBackground});
+	background-position: center;
+	background-size: cover;
 `;
 
 export interface CardProps {
