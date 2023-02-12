@@ -1,5 +1,6 @@
 import { AnimatePresence } from 'framer-motion';
 import { useEffect, useState, ChangeEvent } from 'react';
+import { ImSearch } from 'react-icons/im';
 import useDebounce from '../../hooks/useDebounce';
 import { BigInput, DropDownContainer, DropDownItem, InputContainer } from './styles';
 const chars = [
@@ -85,6 +86,10 @@ function SearchInput() {
 				placeholder="Encontre seu personagem nos 7 reinos de Westeros"
 				value={filterInput}
 				onChange={handleChange}
+			/>
+			<ImSearch
+				size={16}
+				style={{ position: 'absolute', right: '2rem', top: '1.2rem', color: '#222' }}
 			/>
 			{filteredData && !selected && (
 				<AnimatePresence>

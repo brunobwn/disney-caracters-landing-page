@@ -20,10 +20,10 @@ export const InputContainer = styled(motion.div)`
 
 export const BigInput = styled.input`
 	width: 100%;
-	padding: 1rem;
+	padding: 1rem 2.5rem 1rem 1rem;
 	font-size: 1.2rem;
 	background-color: white;
-	border-radius: 1rem;
+	border-radius: 0.3rem;
 	color: #222;
 	box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
 	border: 1px solid rgba(212, 212, 212, 0.925);
@@ -31,7 +31,7 @@ export const BigInput = styled.input`
 
 export const DropDownContainer = styled(motion.ul)`
 	width: 100%;
-	border-radius: 0.2rem;
+	border-radius: 0.3rem;
 	font-size: 1.2rem;
 	background-color: white;
 	color: #424242;
