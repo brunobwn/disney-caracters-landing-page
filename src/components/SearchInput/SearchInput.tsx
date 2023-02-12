@@ -4,8 +4,9 @@ import { ImSearch } from 'react-icons/im';
 import useDebounce from '../../hooks/useDebounce';
 import { BigInput, DropDownContainer, DropDownItem, InputContainer } from './styles';
 import { useSelector } from 'react-redux/es/exports';
-import { RootState } from '../../store/store';
+import { RootState, useAppDispatch } from '../../store/store';
 import Character from '../../store/types/character';
+import { selectCharacter } from '../../store/models/modalSlice';
 
 const inputContainer = {
 	visible: { opacity: 1 },
@@ -36,6 +37,7 @@ function SearchInput({ refs }: SearchInputProps) {
 	const inputRef = useRef<HTMLInputElement>(null);
 
 	const { characters } = useSelector((state: RootState) => state.characterSlice);
+	const dispatch = useAppDispatch();
 
 	useEffect(() => {
 		handleFilter();
@@ -67,6 +69,7 @@ function SearchInput({ refs }: SearchInputProps) {
 			findRef.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
 		}
 		handleInputBlur();
+		dispatch(selectCharacter(char));
 	}
 
 	function handleInputBlur() {

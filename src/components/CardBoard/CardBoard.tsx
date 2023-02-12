@@ -3,8 +3,10 @@ import ScrollContainer from 'react-indiana-drag-scroll';
 import { createPossiblePositions } from './helpers';
 import { BigContainer, Card, grid } from './styles';
 import { useSelector } from 'react-redux/es/exports';
-import { RootState } from '../../store/store';
+import { RootState, useAppDispatch } from '../../store/store';
 import SearchInput from '../SearchInput/SearchInput';
+import { selectCharacter } from '../../store/models/modalSlice';
+import Character from '../../store/types/character';
 
 export const possibleSpotsInitial = createPossiblePositions(grid);
 
@@ -12,6 +14,7 @@ function CardBoard() {
 	const { characters } = useSelector((state: RootState) => state.characterSlice);
 	const scrollContainer = useRef<HTMLDivElement>(null);
 	const cardsRef = useRef<HTMLDivElement[]>([]);
+	const dispatch = useAppDispatch();
 
 	const possibleSpots = possibleSpotsInitial;
 
@@ -41,8 +44,9 @@ function CardBoard() {
 		return Math.random() * 3;
 	}
 
-	function handleCardClick(id: number, ref: HTMLDivElement) {
+	function handleCardClick(character: Character, ref: HTMLDivElement) {
 		ref.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
+		dispatch(selectCharacter(character));
 	}
 
 	return (
@@ -75,7 +79,7 @@ function CardBoard() {
 									ref={(el) => {
 										if (el) return (cardsRef.current[i] = el);
 									}}
-									onClick={() => handleCardClick(char.id, cardsRef.current[i])}
+									onClick={() => handleCardClick(char, cardsRef.current[i])}
 								/>
 							);
 						})}

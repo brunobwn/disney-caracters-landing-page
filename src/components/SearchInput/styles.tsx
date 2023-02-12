@@ -9,7 +9,7 @@ export const InputContainer = styled(motion.div)`
 	left: 50%;
 	transform: translateX(-50%);
 	padding: 0 1rem;
-	z-index: 100;
+	z-index: 50;
 	opacity: 0.8;
 	transition: all 250ms ease-in;
 
