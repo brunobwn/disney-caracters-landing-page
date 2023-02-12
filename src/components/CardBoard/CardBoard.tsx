@@ -6,8 +6,10 @@ import { useSelector } from 'react-redux/es/exports';
 import { RootState } from '../../store/store';
 
 export const possibleSpotsInitial = createPossiblePositions(grid);
-
-function CardBoard() {
+type CardBoardProps = {
+	children: React.ReactElement;
+};
+function CardBoard({ children }: CardBoardProps) {
 	const scrollContainer = useRef<HTMLDivElement>(null);
 	const { characters } = useSelector((state: RootState) => state.characterSlice);
 
@@ -30,6 +32,10 @@ function CardBoard() {
 		}
 	}, []);
 
+	function getRandomMs() {
+		return Math.random() * 3;
+	}
+
 	return (
 		<ScrollContainer className="fullscreen grabbable" innerRef={scrollContainer}>
 			<BigContainer>
@@ -44,10 +50,15 @@ function CardBoard() {
 								imageUrl={char.imageUrl ?? ''}
 								whileHover={{ scale: 1.1 }}
 								whileTap={{ scale: 0.95 }}
+								initial={{ opacity: 0, size: 0.3 }}
+								animate={{ opacity: 1, size: [1.5, 1] }}
+								transition={{ delay: getRandomMs() }}
+								id={`${char.fullName}`}
 							/>
 						);
 					})}
 			</BigContainer>
+			{children}
 		</ScrollContainer>
 	);
 }

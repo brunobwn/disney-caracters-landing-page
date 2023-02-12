@@ -12,8 +12,9 @@ function App() {
 
 	return (
 		<>
-			<SearchInput />
-			<CardBoard />
+			<CardBoard>
+				<SearchInput />
+			</CardBoard>
 		</>
 	);
 }

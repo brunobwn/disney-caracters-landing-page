@@ -3,6 +3,10 @@ import { useEffect, useState, ChangeEvent } from 'react';
 import { ImSearch } from 'react-icons/im';
 import useDebounce from '../../hooks/useDebounce';
 import { BigInput, DropDownContainer, DropDownItem, InputContainer } from './styles';
+import { useSelector } from 'react-redux/es/exports';
+import { RootState } from '../../store/store';
+import Character from '../../store/types/character';
+
 const chars = [
 	'Fulano1',
 	'Fulano142',
@@ -39,8 +43,10 @@ function SearchInput() {
 	const [filterInput, setFilterInput] = useState('');
 	const [selected, setSelected] = useState(false);
 
-	const [filteredData, setFilteredData] = useState<string[] | null>(null);
+	const [filteredData, setFilteredData] = useState<Character[] | null>(null);
 	const filterInputDebounce = useDebounce(filterInput, 700);
+
+	const { characters } = useSelector((state: RootState) => state.characterSlice);
 
 	useEffect(() => {
 		handleFilter();
@@ -51,11 +57,11 @@ function SearchInput() {
 			setFilteredData(null);
 			return;
 		}
-		const newfilteredData = chars.filter((nome) =>
-			String(nome.toLowerCase()).includes(String(filterInput.toLowerCase()))
+		const newfilteredData = characters?.filter((char) =>
+			String(char.fullName?.toLowerCase()).includes(String(filterInput.toLowerCase()))
 		);
 
-		if (newfilteredData.length > 0) {
+		if (newfilteredData && newfilteredData.length > 0) {
 			setFilteredData(newfilteredData);
 			return;
 		}
@@ -63,10 +69,11 @@ function SearchInput() {
 		setFilteredData(null);
 	}
 
-	function handleCharacterClick(nome: string) {
+	function handleCharacterClick(fullName: string) {
 		setFilteredData(null);
-		setFilterInput(nome);
+		setFilterInput(fullName);
 		setSelected(true);
+		window.location.href = `#${fullName}`;
 	}
 
 	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -94,9 +101,13 @@ function SearchInput() {
 			{filteredData && !selected && (
 				<AnimatePresence>
 					<DropDownContainer variants={list} initial="hidden" animate="visible">
-						{filteredData.map((nome, i) => (
-							<DropDownItem key={i} onClick={() => handleCharacterClick(nome)} variants={item}>
-								{nome}
+						{filteredData.map((char) => (
+							<DropDownItem
+								key={char.id}
+								onClick={() => handleCharacterClick(char.fullName ?? '')}
+								variants={item}
+							>
+								{char.fullName}
 							</DropDownItem>
 						))}
 					</DropDownContainer>
