@@ -5,7 +5,7 @@ import westerosBackground from './../../assets/westeros-background.jpg';
 
 export const grid: gridType = { rows: 20, columns: 20 };
 
-export const BigContainer = styled.div`
+export const BigContainer = styled(motion.div)`
 	min-width: 1024px;
 	width: 200vw;
 	aspect-ratio: 1 / 1;

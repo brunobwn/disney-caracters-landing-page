@@ -7,23 +7,6 @@ import { useSelector } from 'react-redux/es/exports';
 import { RootState } from '../../store/store';
 import Character from '../../store/types/character';
 
-const chars = [
-	'Fulano1',
-	'Fulano142',
-	'Ciclano1',
-	'Joano1',
-	'Joana1',
-	'Ciclano2',
-	'Joano3',
-	'Joana3',
-	'Ciclano4',
-	'Joano44',
-	'Joana55',
-	'Ciclano67',
-	'Joano123',
-	'Joano56223',
-];
-
 const inputContainer = {
 	visible: { opacity: 1 },
 	hidden: { opacity: 0 },
@@ -39,12 +22,16 @@ const item = {
 	hidden: { opacity: 0 },
 };
 
-function SearchInput() {
+type SearchInputProps = {
+	refs: HTMLDivElement[] | null;
+};
+
+function SearchInput({ refs }: SearchInputProps) {
 	const [filterInput, setFilterInput] = useState('');
 	const [selected, setSelected] = useState(false);
 
 	const [filteredData, setFilteredData] = useState<Character[] | null>(null);
-	const filterInputDebounce = useDebounce(filterInput, 700);
+	const filterInputDebounce = useDebounce(filterInput, 300);
 
 	const { characters } = useSelector((state: RootState) => state.characterSlice);
 
@@ -69,11 +56,14 @@ function SearchInput() {
 		setFilteredData(null);
 	}
 
-	function handleCharacterClick(fullName: string) {
+	function handleCharacterClick(char: Character) {
 		setFilteredData(null);
-		setFilterInput(fullName);
+		setFilterInput(char.fullName ?? '');
 		setSelected(true);
-		window.location.href = `#${fullName}`;
+		const findRef = refs?.find((ref) => ref.id === `#${char.id}`);
+		if (findRef) {
+			findRef.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
+		}
 	}
 
 	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -102,11 +92,7 @@ function SearchInput() {
 				<AnimatePresence>
 					<DropDownContainer variants={list} initial="hidden" animate="visible">
 						{filteredData.map((char) => (
-							<DropDownItem
-								key={char.id}
-								onClick={() => handleCharacterClick(char.fullName ?? '')}
-								variants={item}
-							>
+							<DropDownItem key={char.id} onClick={() => handleCharacterClick(char)} variants={item}>
 								{char.fullName}
 							</DropDownItem>
 						))}
