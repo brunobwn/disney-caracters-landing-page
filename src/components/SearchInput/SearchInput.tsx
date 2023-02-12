@@ -1,5 +1,5 @@
 import { AnimatePresence } from 'framer-motion';
-import { useEffect, useState, ChangeEvent } from 'react';
+import { useEffect, useState, ChangeEvent, useRef } from 'react';
 import { ImSearch } from 'react-icons/im';
 import useDebounce from '../../hooks/useDebounce';
 import { BigInput, DropDownContainer, DropDownItem, InputContainer } from './styles';
@@ -33,6 +33,8 @@ function SearchInput({ refs }: SearchInputProps) {
 	const [filteredData, setFilteredData] = useState<Character[] | null>(null);
 	const filterInputDebounce = useDebounce(filterInput, 300);
 
+	const inputRef = useRef<HTMLInputElement>(null);
+
 	const { characters } = useSelector((state: RootState) => state.characterSlice);
 
 	useEffect(() => {
@@ -64,6 +66,11 @@ function SearchInput({ refs }: SearchInputProps) {
 		if (findRef) {
 			findRef.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
 		}
+		handleInputBlur();
+	}
+
+	function handleInputBlur() {
+		inputRef.current?.blur();
 	}
 
 	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -83,6 +90,7 @@ function SearchInput({ refs }: SearchInputProps) {
 				placeholder="Encontre seu personagem nos 7 reinos de Westeros"
 				value={filterInput}
 				onChange={handleChange}
+				ref={inputRef}
 			/>
 			<ImSearch
 				size={16}

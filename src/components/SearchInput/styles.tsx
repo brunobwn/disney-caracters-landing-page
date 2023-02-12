@@ -26,7 +26,11 @@ export const BigInput = styled.input`
 	border-radius: 0.3rem;
 	color: #222;
 	box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
-	border: 1px solid rgba(212, 212, 212, 0.925);
+	border: 2px solid rgba(212, 212, 212, 0.925);
+	transition: all 0.2s ease;
+	&:hover {
+		background-color: #eeeeee;
+	}
 `;
 
 export const DropDownContainer = styled(motion.ul)`
