@@ -50,8 +50,18 @@ export const HouseContainer = styled.div`
 export const ContentContainer = styled.div`
 	flex-grow: 1;
 	display: flex;
+	flex-wrap: wrap;
 	justify-content: space-between;
-	align-content: space-between;
+	align-content: center;
+
+	div.titles {
+		height: fit-content;
+		margin: auto 0;
+	}
+
+	& img {
+		height: 5rem;
+	}
 `;
 
 export const ButtonClose = styled.button`
