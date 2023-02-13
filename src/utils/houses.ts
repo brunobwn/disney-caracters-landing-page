@@ -1,92 +1,107 @@
-interface House{
-  imgPath: string
-  names: string[]
+import lannister from '../assets/houses/lannister.png';
+import targaryen from '../assets/houses/targaryen.png';
+import tarly from '../assets/houses/tarly.png';
+import stark from '../assets/houses/stark.png';
+import baratheon from '../assets/houses/baratheon.png';
+import greyjoy from '../assets/houses/greyjoy.png';
+import clegane from '../assets/houses/clegane.png';
+import baelish from '../assets/houses/baelish.png';
+import seaworth from '../assets/houses/seaworth.png';
+import tyrell from '../assets/houses/tyrell.png';
+import freefolk from '../assets/houses/freefolk.png';
+import tarth from '../assets/houses/tarth.png';
+import bolton from '../assets/houses/bolton.png';
+import mormont from '../assets/houses/mormont.png';
+import sparrow from '../assets/houses/sparrow.png';
+import martell from '../assets/houses/martell.png';
+import fallback from '../assets/houses/fallback.png';
+
+interface House {
+	imgPath: string;
+	names: string[];
 }
 
-const houses: House[]=[
-  {
-    imgPath: '/lannister.png',
-    names: ['House Lanister', 'Lannister', 'House Lannister']
-  },
-  {
-    imgPath: '/targaryen.png',
-    names: ['House Targaryen', 'Targaryan']
-  },
-  {
-    imgPath: '/tarly.png',
-    names: ['House Tarly'] 
-  },
-  {
-    imgPath: '/stark.png',
-    names: ['House Stark', 'Stark']
-  },
-  {
-    imgPath: '/baratheon.png',
-    names: ['House Baratheon', 'Baratheon']
-  },
-  {
-    imgPath: '/greyjoy.png',
-    names: ['House Greyjoy', 'Greyjoy']
-  },
-  {
-    imgPath: '/clegane.png',
-    names: ['House Clegane'],
-  },
-  {
-    imgPath: '/baelish.png',
-    names: ['House Baelish']
-  },
-  {
-    imgPath: '/seaworth.png',
-    names: ['House Seaworth']
-  },
-  {
-    imgPath: '/tyrell.png',
-    names: ['House Tyrell', 'Tyrell']
-  },
-  {
-    imgPath: '/freefolk.png',
-    names: ['Free Folk']
-  },
-  {
-    imgPath: '/tarth.png',
-    names: ['Tarth']
-  },
-  {
-    imgPath: '/bolton.png',
-    names: ['Bolton']
-  },
-  {
-    imgPath: '/mormont.png',
-    names: ['Mormont']
-  },
-  {
-    imgPath: '/sparrow.png',
-    names: ['Sparrow']
-  },
-  {
-    imgPath: '/martell.png',
-    names: ['Viper']
-  }
-]
+const houses: House[] = [
+	{
+		imgPath: lannister,
+		names: ['House Lanister', 'Lannister', 'House Lannister'],
+	},
+	{
+		imgPath: targaryen,
+		names: ['House Targaryen', 'Targaryan'],
+	},
+	{
+		imgPath: tarly,
+		names: ['House Tarly'],
+	},
+	{
+		imgPath: stark,
+		names: ['House Stark', 'Stark'],
+	},
+	{
+		imgPath: baratheon,
+		names: ['House Baratheon', 'Baratheon'],
+	},
+	{
+		imgPath: greyjoy,
+		names: ['House Greyjoy', 'Greyjoy'],
+	},
+	{
+		imgPath: clegane,
+		names: ['House Clegane'],
+	},
+	{
+		imgPath: baelish,
+		names: ['House Baelish'],
+	},
+	{
+		imgPath: seaworth,
+		names: ['House Seaworth'],
+	},
+	{
+		imgPath: tyrell,
+		names: ['House Tyrell', 'Tyrell'],
+	},
+	{
+		imgPath: freefolk,
+		names: ['Free Folk'],
+	},
+	{
+		imgPath: tarth,
+		names: ['Tarth'],
+	},
+	{
+		imgPath: bolton,
+		names: ['Bolton'],
+	},
+	{
+		imgPath: mormont,
+		names: ['Mormont'],
+	},
+	{
+		imgPath: sparrow,
+		names: ['Sparrow'],
+	},
+	{
+		imgPath: martell,
+		names: ['Viper'],
+	},
+];
 
-const fallbackImgPath = '/fallback.png'
+export function getHouseImgPath(houseName: string | null): string {
+	let img = null;
 
-export function getHouseImgPath(houseName: string | null): string{
-  let img = null
+	houses.forEach((house) => {
+		house.names.forEach((name) => {
+			if (name === houseName) {
+				img = house.imgPath;
+			}
+		});
+	});
 
-  houses.forEach((house) => {
+	if (img) {
+		return img;
+	}
 
-    house.names.forEach((name) => {
-      if(name === houseName){
-        img = house.imgPath
-      }
-    })
-  })
-
-  if(img){
-    return img
-  }
-
-  return fallbackImgPath
+	return fallback;
 }

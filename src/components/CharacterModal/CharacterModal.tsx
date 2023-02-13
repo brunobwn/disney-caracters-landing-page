@@ -11,7 +11,7 @@ import {
 	HouseContainer,
 	PictureContainer,
 } from './styles';
-import { getHouseSymbolURL } from '../../utils/houses';
+import { getHouseImgPath } from '../../utils/houses';
 
 Modal.setAppElement('#root');
 
@@ -41,7 +41,7 @@ function CharacterModal() {
 						</div>
 						<HouseContainer>
 							<img
-								src={getHouseSymbolURL(activeCharacter.family!)}
+								src={getHouseImgPath(activeCharacter.family!)}
 								alt={`${activeCharacter.family} image`}
 							/>
 						</HouseContainer>
